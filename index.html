@@ -22,7 +22,7 @@ button{font:inherit;font-weight:750;border:0;border-radius:14px;padding:12px 14p
 .rangeRow{display:flex;align-items:center;gap:12px}.rangeRow input{padding:0}.score{font-size:22px;font-weight:900;min-width:30px;text-align:center}
 .bottomnav{position:fixed;left:0;right:0;bottom:0;background:#fffdf9ef;backdrop-filter:blur(10px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:7px 8px calc(7px + env(safe-area-inset-bottom));z-index:20}
 .bottomnav button{background:transparent;font-size:12px;padding:8px 4px}.bottomnav button.active{background:var(--lav2)}
-.record{border:1px solid var(--line);border-radius:17px;background:white;padding:14px;margin:9px 0}.recordTitle{font-weight:850;margin-bottom:5px}.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.badge{font-size:12px;background:var(--lav2);border-radius:999px;padding:5px 8px}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.record{border:1px solid var(--line);border-radius:17px;background:white;padding:14px;margin:9px 0}.recordTitle{font-weight:850;margin-bottom:8px}.recordSection{margin-top:12px}.recordLabel{font-size:12px;font-weight:800;color:var(--muted);margin-bottom:4px}.recordText{white-space:pre-wrap;line-height:1.6;word-break:break-word}.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.badge{font-size:12px;background:var(--lav2);border-radius:999px;padding:5px 8px}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 .toolbar{display:grid;grid-template-columns:1.2fr .8fr;gap:8px}.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:white;border:1px solid var(--line);border-radius:17px;padding:14px}.stat b{font-size:23px;display:block;margin-top:4px}
 .barline{height:9px;background:#eee7df;border-radius:999px;overflow:hidden;margin:4px 0 10px}.barline i{height:100%;display:block;background:#cbb4df}.auth{max-width:480px;margin:45px auto}
 #toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#453e49;color:#fff;padding:11px 15px;border-radius:999px;opacity:0;transition:.2s;z-index:50;pointer-events:none}#toast.show{opacity:1}
@@ -92,7 +92,63 @@ $("save").onclick=async()=>{let d=current();if(!d.situation&&!d.thought&&!d.emot
 
 async function loadRecords(){try{let s=await getDocs(query(collection(db,"users",user.uid,"records"),orderBy("createdAt","desc")));records=s.docs.map(x=>({id:x.id,...x.data()}));renderRecords();renderStats()}catch(e){$("sync").textContent="⚠️ 동기화 오류";console.error(e)}}
 function when(r){return r.createdAt?.toDate?r.createdAt.toDate():new Date()}
-function renderRecords(){let q=$("search").value.toLowerCase(),f=$("filter").value,fav=$("favOnly").checked;let a=records.filter(r=>(!q||((r.situation||"")+" "+(r.thought||"")).toLowerCase().includes(q))&&(!f||(r.emotions||[]).includes(f)||r.emotionOther===f)&&(!fav||r.favorite));$("recordList").innerHTML=a.length?a.map(r=>`<div class="record"><div class="recordTitle">${r.favorite?"⭐ ":""}${esc(r.situation||"상황 미기록")}</div><div class="tiny">${when(r).toLocaleString("ko-KR")} · 강도 ${r.intensity||"-"}</div><div class="badges">${[...(r.emotions||[]),r.emotionOther].filter(Boolean).map(x=>`<span class="badge">${esc(x)}</span>`).join("")}</div><div class="actions"><button class="small" data-open="${r.id}">열기/수정</button><button class="small" data-fav="${r.id}">${r.favorite?"★ 해제":"☆ 즐겨찾기"}</button><button class="small danger" data-del="${r.id}">삭제</button></div></div>`).join(""):'<div class="card muted">조건에 맞는 기록이 없어요.</div>';document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{let r=records.find(x=>x.id===b.dataset.open);editing=r.id;fill(r);document.querySelector('[data-tab="Write"]').click();scrollTo(0,0)});document.querySelectorAll("[data-fav]").forEach(b=>b.onclick=async()=>{let r=records.find(x=>x.id===b.dataset.fav);await updateDoc(doc(db,"users",user.uid,"records",r.id),{favorite:!r.favorite,updatedAt:serverTimestamp()});await loadRecords()});document.querySelectorAll("[data-del]").forEach(b=>b.onclick=async()=>{if(confirm("삭제할까요?")){await deleteDoc(doc(db,"users",user.uid,"records",b.dataset.del));await loadRecords()}})}
+function renderRecords(){
+  let q=$("search").value.toLowerCase(),f=$("filter").value,fav=$("favOnly").checked;
+  let a=records.filter(r=>
+    (!q||((r.situation||"")+" "+(r.thought||"")+" "+(r.action||"")+" "+(r.helpful||"")+" "+(r.reflection||"")).toLowerCase().includes(q)) &&
+    (!f||(r.emotions||[]).includes(f)||r.emotionOther===f) &&
+    (!fav||r.favorite)
+  );
+
+  function section(label,value){
+    if(value===undefined||value===null||String(value).trim()==="") return "";
+    return `<div class="recordSection"><div class="recordLabel">${label}</div><div class="recordText">${esc(value)}</div></div>`;
+  }
+  function chipSection(label,values){
+    let v=(values||[]).filter(Boolean);
+    if(!v.length) return "";
+    return `<div class="recordSection"><div class="recordLabel">${label}</div><div class="badges">${v.map(x=>`<span class="badge">${esc(x)}</span>`).join("")}</div></div>`;
+  }
+
+  $("recordList").innerHTML=a.length ? a.map(r=>{
+    let emotions=[...(r.emotions||[]),r.emotionOther].filter(Boolean);
+    let bodies=[...(r.body||[]),r.bodyOther].filter(Boolean);
+    let intensity=(emotions.length && r.intensity) ? `<span class="badge">강도 ${esc(r.intensity)}</span>` : "";
+    return `<div class="record">
+      <div class="recordTitle">${r.favorite?"⭐ ":""}${when(r).toLocaleString("ko-KR")}</div>
+      ${section("상황",r.situation)}
+      ${section("생각",r.thought)}
+      ${emotions.length?`<div class="recordSection"><div class="recordLabel">감정</div><div class="badges">${emotions.map(x=>`<span class="badge">${esc(x)}</span>`).join("")}${intensity}</div></div>`:""}
+      ${chipSection("신체 반응",bodies)}
+      ${section("행동 / 충동",r.action)}
+      ${section("나에게 도움 된 것",r.helpful)}
+      ${section("한줄 돌아보기",r.reflection)}
+      <div class="actions">
+        <button class="small" data-open="${r.id}">열기/수정</button>
+        <button class="small" data-fav="${r.id}">${r.favorite?"★ 해제":"☆ 즐겨찾기"}</button>
+        <button class="small danger" data-del="${r.id}">삭제</button>
+      </div>
+    </div>`;
+  }).join("") : '<div class="card muted">조건에 맞는 기록이 없어요.</div>';
+
+  document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{
+    let r=records.find(x=>x.id===b.dataset.open);
+    editing=r.id;fill(r);
+    document.querySelector('[data-tab="Write"]').click();
+    scrollTo(0,0);
+  });
+  document.querySelectorAll("[data-fav]").forEach(b=>b.onclick=async()=>{
+    let r=records.find(x=>x.id===b.dataset.fav);
+    await updateDoc(doc(db,"users",user.uid,"records",r.id),{favorite:!r.favorite,updatedAt:serverTimestamp()});
+    await loadRecords();
+  });
+  document.querySelectorAll("[data-del]").forEach(b=>b.onclick=async()=>{
+    if(confirm("삭제할까요?")){
+      await deleteDoc(doc(db,"users",user.uid,"records",b.dataset.del));
+      await loadRecords();
+    }
+  });
+}
 ["search","filter","favOnly"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",renderRecords));
 
 function renderStats(){let cut=new Date(Date.now()-days*86400000),rs=records.filter(r=>when(r)>=cut),c={};rs.flatMap(r=>[...(r.emotions||[]),r.emotionOther].filter(Boolean)).forEach(x=>c[x]=(c[x]||0)+1);let top=Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,7),avg=rs.length?(rs.reduce((s,r)=>s+(+r.intensity||0),0)/rs.length).toFixed(1):"-";$("stats").innerHTML=`<div class="statgrid"><div class="stat"><span class="tiny">기록 수</span><b>${rs.length}</b></div><div class="stat"><span class="tiny">평균 강도</span><b>${avg}</b></div><div class="stat"><span class="tiny">가장 잦은 감정</span><b style="font-size:18px">${esc(top[0]?.[0]||"-")}</b></div><div class="stat"><span class="tiny">도움 기록</span><b>${rs.filter(r=>r.helpful).length}</b></div></div><div class="card"><h2>자주 나온 감정</h2>${top.length?top.map(([k,v])=>`<div class="tiny">${esc(k)} · ${v}회</div><div class="barline"><i style="width:${v/(top[0][1]||1)*100}%"></i></div>`).join(""):'<p class="muted">아직 기록이 없어요.</p>'}</div>`}

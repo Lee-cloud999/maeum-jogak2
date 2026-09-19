@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fbf7ef">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="마음 조각 2">
+<link rel="manifest" href="manifest.webmanifest">
+<title>마음 조각 2</title>
+<style>
+:root{--bg:#fbf7ef;--card:#fffdf9;--ink:#3b3640;--muted:#827a84;--line:#e8dfd7;--lav:#eadff5;--lav2:#f5effa;--danger:#f7e4e4}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+main{max-width:760px;margin:auto;padding:18px 16px 105px}h1{font-size:27px;margin:4px 0 8px}h2{font-size:19px;margin:0 0 7px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin:12px 0;box-shadow:0 5px 16px #5a46540b}.hero{text-align:center;padding:28px 20px}
+.muted,.example{color:var(--muted);line-height:1.5}.example{font-size:13px;margin:0 0 10px}.tiny{font-size:12px;color:var(--muted)}
+input,textarea,select{width:100%;font:inherit;border:1px solid var(--line);border-radius:14px;padding:13px;background:white;color:var(--ink)}textarea{min-height:105px;resize:vertical;line-height:1.55}
+button{font:inherit;font-weight:750;border:0;border-radius:14px;padding:12px 14px;background:var(--lav);color:var(--ink)}.primary{background:#dcc8ed}.secondary{background:#eee8e1}.danger{background:var(--danger)}.small{padding:8px 10px;font-size:13px}
+.hidden{display:none!important}.row{display:flex;gap:9px;align-items:center}.row>*{flex:1}.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sectionTitle{display:flex;align-items:center;gap:9px}.num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--lav);font-weight:900}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 12px;font-size:14px;font-weight:500}.chip.on{background:var(--lav);border-color:#cbb6df;font-weight:800}
+.rangeRow{display:flex;align-items:center;gap:12px}.rangeRow input{padding:0}.score{font-size:22px;font-weight:900;min-width:30px;text-align:center}
+.bottomnav{position:fixed;left:0;right:0;bottom:0;background:#fffdf9ef;backdrop-filter:blur(10px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:7px 8px calc(7px + env(safe-area-inset-bottom));z-index:20}
+.bottomnav button{background:transparent;font-size:12px;padding:8px 4px}.bottomnav button.active{background:var(--lav2)}
+.record{border:1px solid var(--line);border-radius:17px;background:white;padding:14px;margin:9px 0}.recordTitle{font-weight:850;margin-bottom:5px}.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.badge{font-size:12px;background:var(--lav2);border-radius:999px;padding:5px 8px}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.toolbar{display:grid;grid-template-columns:1.2fr .8fr;gap:8px}.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:white;border:1px solid var(--line);border-radius:17px;padding:14px}.stat b{font-size:23px;display:block;margin-top:4px}
+.barline{height:9px;background:#eee7df;border-radius:999px;overflow:hidden;margin:4px 0 10px}.barline i{height:100%;display:block;background:#cbb4df}.auth{max-width:480px;margin:45px auto}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#453e49;color:#fff;padding:11px 15px;border-radius:999px;opacity:0;transition:.2s;z-index:50;pointer-events:none}#toast.show{opacity:1}
+@media(min-width:700px){.statgrid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body><main>
+<section id="authView" class="auth">
+<div class="card hero"><div style="font-size:50px">🐱</div><h1>마음 조각 2</h1><p class="muted">같은 계정으로 로그인하면 모바일과 PC 기록이 자동으로 동기화돼요.</p>
+<input id="email" type="email" placeholder="이메일"><br><br><input id="password" type="password" placeholder="비밀번호 (6자 이상)"><br><br>
+<div class="row"><button id="login" class="primary">로그인</button><button id="signup">처음 가입</button></div><p id="authMsg" class="tiny"></p></div>
+</section>
+
+<section id="appView" class="hidden">
+<div class="top"><div><b style="font-size:22px">🐱 마음 조각 2</b><div id="sync" class="tiny">동기화 중…</div></div><button id="logout" class="secondary small">로그아웃</button></div>
+
+<section id="tabWrite">
+<div class="card"><div class="sectionTitle"><span class="num">1</span><h2>상황</h2></div><p class="example">예: 답장을 기다리고 있었는데 한동안 연락이 오지 않았다.</p><textarea id="situation"></textarea></div>
+<div class="card"><div class="sectionTitle"><span class="num">2</span><h2>생각</h2></div><p class="example">예: 내가 뭔가 잘못했나? 나를 싫어하게 된 걸까?</p><textarea id="thought"></textarea></div>
+<div class="card"><div class="sectionTitle"><span class="num">3</span><h2>감정</h2></div><p class="example">예: 불안 + 서운함 + 안도감처럼 여러 감정을 함께 골라도 괜찮아요.</p><div id="emotionChips" class="chips"></div><br><input id="emotionOther" placeholder="목록에 없는 감정 직접 입력"><p class="example" style="margin-top:14px">전체 감정 강도</p><div class="rangeRow"><input id="intensity" type="range" min="1" max="10" value="5"><span id="score" class="score">5</span></div></div>
+<div class="card"><div class="sectionTitle"><span class="num">4</span><h2>신체 반응</h2></div><p class="example">예: 심장이 두근거리고 목과 어깨가 긴장됐다.</p><div id="bodyChips" class="chips"></div><br><input id="bodyOther" placeholder="다른 신체 반응 직접 입력"></div>
+<div class="card"><div class="sectionTitle"><span class="num">5</span><h2>행동 / 충동</h2></div><p class="example">예: 계속 휴대폰을 확인하고 싶었고, 한 번 더 연락하고 싶었다.</p><textarea id="action"></textarea></div>
+<div class="card"><h2>🌿 나에게 도움 된 것</h2><p class="example">예: 산책하기, 음악 듣기, 잠깐 누워 있기, 누군가에게 말하기</p><textarea id="helpful"></textarea></div>
+<div class="card"><h2>✏️ 한줄 돌아보기</h2><p class="example">예: 지금 다시 보면 이 상황을 어떻게 바라보고 싶은가?</p><textarea id="reflection"></textarea></div>
+<button id="save" class="primary" style="width:100%;font-size:17px">마음 조각 저장하기</button><button id="clear" class="secondary" style="width:100%;margin-top:8px">작성 내용 비우기</button>
+</section>
+
+<section id="tabRecords" class="hidden"><div class="card"><h1>기록 보기</h1><div class="toolbar"><input id="search" placeholder="상황·생각 검색"><select id="filter"><option value="">모든 감정</option></select></div><label class="tiny"><input id="favOnly" type="checkbox" style="width:auto"> 즐겨찾기만 보기</label></div><div id="recordList"></div></section>
+<section id="tabStats" class="hidden"><div class="card"><h1>분석</h1><div class="row"><button id="days7" class="small">최근 7일</button><button id="days30" class="small primary">최근 30일</button></div></div><div id="stats"></div></section>
+<section id="tabSettings" class="hidden"><div class="card"><h1>설정</h1><p class="muted">같은 이메일 계정으로 로그인하면 모바일과 PC에서 같은 기록을 볼 수 있어요.</p><button id="exportJson" style="width:100%">JSON 백업</button><br><br><button id="exportCsv" style="width:100%">CSV 내보내기</button><br><br><label class="tiny">JSON 백업 복원</label><input id="importFile" type="file" accept=".json,application/json"></div></section>
+</section>
+</main>
+<nav id="nav" class="bottomnav hidden"><button data-tab="Write" class="active">✍️<br>기록</button><button data-tab="Records">📚<br>기록보기</button><button data-tab="Stats">📊<br>분석</button><button data-tab="Settings">⚙️<br>설정</button></nav><div id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getFirestore,collection,addDoc,doc,updateDoc,deleteDoc,getDocs,query,orderBy,serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const firebaseConfig={"apiKey": "AIzaSyCOy8x5kPeJUUqRUjEHRqckT2ReULEoUac", "authDomain": "maeum-jogak2.firebaseapp.com", "projectId": "maeum-jogak2", "storageBucket": "maeum-jogak2.firebasestorage.app", "messagingSenderId": "942972843404", "appId": "1:942972843404:web:8148d7610469425609d2a9", "measurementId": "G-HCZ819E5VC"};
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+const EMO=["불안","슬픔","화남","서운함","죄책감","수치심","답답함","외로움","두려움","짜증","실망","기쁨","안도감","편안함","감사","기대감","뿌듯함","즐거움","설렘","만족감","사랑스러움"];
+const BODY=["심장이 두근거림","숨이 답답함","목·어깨가 긴장됨","속이 불편함","머리가 아픔","손에 땀이 남","몸이 무거움","눈물이 남","얼굴이 뜨거움","손발이 차가움"];
+const $=x=>document.getElementById(x),DRAFT="mj2draft";let user=null,records=[],selE=[],selB=[],editing=null,days=30;
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function toast(t){let e=$("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1500)}
+$("emotionChips").innerHTML=EMO.map(x=>`<button type="button" class="chip" data-e="${x}">${x}</button>`).join("");
+$("bodyChips").innerHTML=BODY.map(x=>`<button type="button" class="chip" data-b="${x}">${x}</button>`).join("");
+$("filter").innerHTML='<option value="">모든 감정</option>'+EMO.map(x=>`<option>${x}</option>`).join("");
+function showApp(ok){$("authView").classList.toggle("hidden",ok);$("appView").classList.toggle("hidden",!ok);$("nav").classList.toggle("hidden",!ok)}
+onAuthStateChanged(auth,async u=>{user=u;showApp(!!u);if(u){$("sync").textContent="☁️ "+u.email;loadDraft();await loadRecords()}});
+$("login").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value)}catch(e){$("authMsg").textContent="로그인 실패: "+e.message}};
+$("signup").onclick=async()=>{try{await createUserWithEmailAndPassword(auth,$("email").value.trim(),$("password").value)}catch(e){$("authMsg").textContent="가입 실패: "+e.message}};
+$("logout").onclick=()=>signOut(auth);
+
+function current(){return {situation:$("situation").value.trim(),thought:$("thought").value.trim(),emotions:[...selE],emotionOther:$("emotionOther").value.trim(),intensity:+$("intensity").value,body:[...selB],bodyOther:$("bodyOther").value.trim(),action:$("action").value.trim(),helpful:$("helpful").value.trim(),reflection:$("reflection").value.trim()}}
+function saveDraft(){localStorage.setItem(DRAFT,JSON.stringify(current()))}
+function fill(d={}){$("situation").value=d.situation||"";$("thought").value=d.thought||"";selE=[...(d.emotions||[])];$("emotionOther").value=d.emotionOther||"";$("intensity").value=d.intensity||5;$("score").textContent=d.intensity||5;selB=[...(d.body||[])];$("bodyOther").value=d.bodyOther||"";$("action").value=d.action||"";$("helpful").value=d.helpful||"";$("reflection").value=d.reflection||"";document.querySelectorAll("[data-e]").forEach(b=>b.classList.toggle("on",selE.includes(b.dataset.e)));document.querySelectorAll("[data-b]").forEach(b=>b.classList.toggle("on",selB.includes(b.dataset.b)))}
+function loadDraft(){try{let d=JSON.parse(localStorage.getItem(DRAFT)||"null");if(d)fill(d)}catch{}}
+function clearForm(){fill({});editing=null;localStorage.removeItem(DRAFT)}
+["situation","thought","emotionOther","bodyOther","action","helpful","reflection"].forEach(id=>$(id).addEventListener("input",saveDraft));
+$("intensity").oninput=()=>{$("score").textContent=$("intensity").value;saveDraft()};
+$("emotionChips").onclick=e=>{let b=e.target.closest("[data-e]");if(!b)return;let i=selE.indexOf(b.dataset.e);i>=0?selE.splice(i,1):selE.push(b.dataset.e);b.classList.toggle("on");saveDraft()};
+$("bodyChips").onclick=e=>{let b=e.target.closest("[data-b]");if(!b)return;let i=selB.indexOf(b.dataset.b);i>=0?selB.splice(i,1):selB.push(b.dataset.b);b.classList.toggle("on");saveDraft()};
+$("clear").onclick=()=>{if(confirm("작성 내용을 비울까요?"))clearForm()};
+$("save").onclick=async()=>{let d=current();if(!d.situation&&!d.thought&&!d.emotions.length&&!d.action)return alert("기록할 내용을 조금이라도 입력해주세요.");try{if(editing){let old=records.find(r=>r.id===editing);await updateDoc(doc(db,"users",user.uid,"records",editing),{...d,favorite:old?.favorite||false,updatedAt:serverTimestamp()})}else{await addDoc(collection(db,"users",user.uid,"records"),{...d,favorite:false,createdAt:serverTimestamp(),updatedAt:serverTimestamp()})}clearForm();toast("저장했어요 🌷");await loadRecords()}catch(e){alert("저장 실패: "+e.message)}};
+
+async function loadRecords(){try{let s=await getDocs(query(collection(db,"users",user.uid,"records"),orderBy("createdAt","desc")));records=s.docs.map(x=>({id:x.id,...x.data()}));renderRecords();renderStats()}catch(e){$("sync").textContent="⚠️ 동기화 오류";console.error(e)}}
+function when(r){return r.createdAt?.toDate?r.createdAt.toDate():new Date()}
+function renderRecords(){let q=$("search").value.toLowerCase(),f=$("filter").value,fav=$("favOnly").checked;let a=records.filter(r=>(!q||((r.situation||"")+" "+(r.thought||"")).toLowerCase().includes(q))&&(!f||(r.emotions||[]).includes(f)||r.emotionOther===f)&&(!fav||r.favorite));$("recordList").innerHTML=a.length?a.map(r=>`<div class="record"><div class="recordTitle">${r.favorite?"⭐ ":""}${esc(r.situation||"상황 미기록")}</div><div class="tiny">${when(r).toLocaleString("ko-KR")} · 강도 ${r.intensity||"-"}</div><div class="badges">${[...(r.emotions||[]),r.emotionOther].filter(Boolean).map(x=>`<span class="badge">${esc(x)}</span>`).join("")}</div><div class="actions"><button class="small" data-open="${r.id}">열기/수정</button><button class="small" data-fav="${r.id}">${r.favorite?"★ 해제":"☆ 즐겨찾기"}</button><button class="small danger" data-del="${r.id}">삭제</button></div></div>`).join(""):'<div class="card muted">조건에 맞는 기록이 없어요.</div>';document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{let r=records.find(x=>x.id===b.dataset.open);editing=r.id;fill(r);document.querySelector('[data-tab="Write"]').click();scrollTo(0,0)});document.querySelectorAll("[data-fav]").forEach(b=>b.onclick=async()=>{let r=records.find(x=>x.id===b.dataset.fav);await updateDoc(doc(db,"users",user.uid,"records",r.id),{favorite:!r.favorite,updatedAt:serverTimestamp()});await loadRecords()});document.querySelectorAll("[data-del]").forEach(b=>b.onclick=async()=>{if(confirm("삭제할까요?")){await deleteDoc(doc(db,"users",user.uid,"records",b.dataset.del));await loadRecords()}})}
+["search","filter","favOnly"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",renderRecords));
+
+function renderStats(){let cut=new Date(Date.now()-days*86400000),rs=records.filter(r=>when(r)>=cut),c={};rs.flatMap(r=>[...(r.emotions||[]),r.emotionOther].filter(Boolean)).forEach(x=>c[x]=(c[x]||0)+1);let top=Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,7),avg=rs.length?(rs.reduce((s,r)=>s+(+r.intensity||0),0)/rs.length).toFixed(1):"-";$("stats").innerHTML=`<div class="statgrid"><div class="stat"><span class="tiny">기록 수</span><b>${rs.length}</b></div><div class="stat"><span class="tiny">평균 강도</span><b>${avg}</b></div><div class="stat"><span class="tiny">가장 잦은 감정</span><b style="font-size:18px">${esc(top[0]?.[0]||"-")}</b></div><div class="stat"><span class="tiny">도움 기록</span><b>${rs.filter(r=>r.helpful).length}</b></div></div><div class="card"><h2>자주 나온 감정</h2>${top.length?top.map(([k,v])=>`<div class="tiny">${esc(k)} · ${v}회</div><div class="barline"><i style="width:${v/(top[0][1]||1)*100}%"></i></div>`).join(""):'<p class="muted">아직 기록이 없어요.</p>'}</div>`}
+$("days7").onclick=()=>{days=7;renderStats()};$("days30").onclick=()=>{days=30;renderStats()};
+document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.remove("active"));b.classList.add("active");["Write","Records","Stats","Settings"].forEach(t=>$("tab"+t).classList.add("hidden"));$("tab"+b.dataset.tab).classList.remove("hidden");if(b.dataset.tab==="Stats")renderStats()});
+
+$("exportJson").onclick=()=>{let blob=new Blob([JSON.stringify(records.map(({id,...r})=>r),null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="마음조각2-백업.json";a.click()};
+$("exportCsv").onclick=()=>{let quote=s=>'"'+String(s??"").replaceAll('"','""')+'"',head=["날짜","상황","생각","감정","강도","신체반응","행동/충동","도움된것","돌아보기"],rows=records.map(r=>[when(r).toLocaleString("ko-KR"),r.situation,r.thought,[...(r.emotions||[]),r.emotionOther].filter(Boolean).join("|"),r.intensity,[...(r.body||[]),r.bodyOther].filter(Boolean).join("|"),r.action,r.helpful,r.reflection].map(quote).join(","));let blob=new Blob(["\ufeff"+head.join(",")+"\n"+rows.join("\n")],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="마음조각2.csv";a.click()};
+$("importFile").onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let arr=JSON.parse(await f.text());if(!Array.isArray(arr))throw Error("잘못된 형식");for(let r of arr){await addDoc(collection(db,"users",user.uid,"records"),{...r,createdAt:serverTimestamp(),updatedAt:serverTimestamp()})}await loadRecords();toast("복원 완료")}catch(err){alert("복원 실패: "+err.message)}};
+if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+</script></body></html>

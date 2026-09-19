@@ -1,4 +1,4 @@
-const C='mj2-v3';
+const C='mj2-v4';
 const A=['./','./index.html','./manifest.webmanifest'];
 
 self.addEventListener('install',e=>{

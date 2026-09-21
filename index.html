@@ -4,46 +4,106 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#fbf7ef">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="마음 조각 2">
-<link rel="manifest" href="manifest.webmanifest">
 <title>마음 조각 2</title>
 <style>
 :root{--bg:#fbf7ef;--card:#fffdf9;--ink:#3b3640;--muted:#827a84;--line:#e8dfd7;--lav:#eadff5;--lav2:#f5effa;--danger:#f7e4e4}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
-main{max-width:760px;margin:auto;padding:18px 16px 105px}h1{font-size:27px;margin:4px 0 8px}h2{font-size:19px;margin:0 0 7px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin:12px 0;box-shadow:0 5px 16px #5a46540b}.hero{text-align:center;padding:28px 20px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+main{max-width:760px;margin:auto;padding:18px 16px 105px}
+h1{font-size:27px;margin:4px 0 8px}
+h2{font-size:19px;margin:0 0 7px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin:12px 0;box-shadow:0 5px 16px #5a46540b}
 .muted,.example{color:var(--muted);line-height:1.5}.example{font-size:13px;margin:0 0 10px}.tiny{font-size:12px;color:var(--muted)}
-input,textarea,select{width:100%;font:inherit;border:1px solid var(--line);border-radius:14px;padding:13px;background:white;color:var(--ink)}textarea{min-height:105px;resize:vertical;line-height:1.55}
-button{font:inherit;font-weight:750;border:0;border-radius:14px;padding:12px 14px;background:var(--lav);color:var(--ink)}.primary{background:#dcc8ed}.secondary{background:#eee8e1}.danger{background:var(--danger)}.small{padding:8px 10px;font-size:13px}
+input,textarea,select{width:100%;font:inherit;border:1px solid var(--line);border-radius:14px;padding:13px;background:white;color:var(--ink)}
+textarea{min-height:105px;resize:vertical;line-height:1.55}
+button{font:inherit;font-weight:750;border:0;border-radius:14px;padding:12px 14px;background:var(--lav);color:var(--ink)}
+.primary{background:#dcc8ed}.secondary{background:#eee8e1}.danger{background:var(--danger)}.small{padding:8px 10px;font-size:13px}
 .hidden{display:none!important}.row{display:flex;gap:9px;align-items:center}.row>*{flex:1}.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .sectionTitle{display:flex;align-items:center;gap:9px}
 .guideChips{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 12px}
 .guideChip{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:6px 10px;border-radius:999px;background:#f4edf9;color:#685775;font-size:12px;font-weight:800}
-.helpBtn{margin-left:auto;background:#f3edf7;padding:8px 10px;font-size:12px}
+.helpBtn{margin-left:auto;background:#f3edf7;padding:8px 10px;font-size:12px;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
 .guideBox{margin-top:12px;padding:14px;border:1px solid var(--line);border-radius:16px;background:#faf7fc}
 .guideRule{padding:11px 0;border-bottom:1px solid #eee6f1}.guideRule:last-child{border-bottom:0}
-.guideRule b{display:block;margin-bottom:5px}
-.exampleGood{margin-top:5px;font-size:13px;color:var(--muted);line-height:1.5}
-.checks{margin-top:12px;padding:12px;border-radius:14px;background:#fff;border:1px dashed #d9cce3}
-.checks div{margin:5px 0;font-size:13px}
+.guideRule b{display:block;margin-bottom:5px}.exampleGood{margin-top:5px;font-size:13px;color:var(--muted);line-height:1.5}
 .num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--lav);font-weight:900}
-.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 12px;font-size:14px;font-weight:500}.chip.on{background:var(--lav);border-color:#cbb6df;font-weight:800}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 12px;font-size:14px;font-weight:500}
+.chip.on{background:var(--lav);border-color:#cbb6df;font-weight:800}
+.emotionGroups{display:grid;gap:12px}
+.emotionGroup{padding:12px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.emotionGroupTitle{font-size:13px;font-weight:900;color:#685775;margin-bottom:8px}
+.emotionGroup .chips{gap:7px}
+.emotionGroup .chip{padding:8px 11px;font-size:13px;cursor:pointer}
+.emotionGroup .chip:has(input:checked){background:var(--lav);border-color:#cbb6df;font-weight:800}
 .rangeRow{display:flex;align-items:center;gap:12px}.rangeRow input{padding:0}.score{font-size:22px;font-weight:900;min-width:30px;text-align:center}
 .bottomnav{position:fixed;left:0;right:0;bottom:0;background:#fffdf9ef;backdrop-filter:blur(10px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:7px 8px calc(7px + env(safe-area-inset-bottom));z-index:20}
 .bottomnav button{background:transparent;font-size:12px;padding:8px 4px}.bottomnav button.active{background:var(--lav2)}
-.record{border:1px solid var(--line);border-radius:17px;background:white;padding:14px;margin:9px 0}.recordTitle{font-weight:850;margin-bottom:8px}.recordSection{margin-top:12px}.recordLabel{font-size:12px;font-weight:800;color:var(--muted);margin-bottom:4px}.recordText{white-space:pre-wrap;line-height:1.6;word-break:break-word}.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;line-height:1;padding:7px 10px;font-size:12px;background:var(--lav2);border-radius:999px;text-align:center}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
-.toolbar{display:grid;grid-template-columns:1.2fr .8fr;gap:8px}.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:white;border:1px solid var(--line);border-radius:17px;padding:14px}.stat b{font-size:23px;display:block;margin-top:4px}
-.barline{height:9px;background:#eee7df;border-radius:999px;overflow:hidden;margin:4px 0 10px}.barline i{height:100%;display:block;background:#cbb4df}.auth{max-width:480px;margin:45px auto}
-#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#453e49;color:#fff;padding:11px 15px;border-radius:999px;opacity:0;transition:.2s;z-index:50;pointer-events:none}#toast.show{opacity:1}
+.record{border:1px solid var(--line);border-radius:17px;background:white;padding:14px;margin:9px 0}.recordTitle{font-weight:850;margin-bottom:8px}
+.recordSection{margin-top:12px}.recordLabel{font-size:12px;font-weight:800;color:var(--muted);margin-bottom:4px}.recordText{white-space:pre-wrap;line-height:1.6;word-break:break-word}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;line-height:1;padding:7px 10px;font-size:12px;background:var(--lav2);border-radius:999px;text-align:center}
+.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.toolbar{display:grid;grid-template-columns:1.2fr .8fr;gap:8px}
+.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:white;border:1px solid var(--line);border-radius:17px;padding:14px}.stat b{font-size:23px;display:block;margin-top:4px}
+.barline{height:9px;background:#eee7df;border-radius:999px;overflow:hidden;margin:4px 0 10px}.barline i{height:100%;display:block;background:#cbb4df}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#453e49;color:#fff;padding:11px 15px;border-radius:999px;opacity:0;transition:.2s;z-index:50;pointer-events:none}
+#toast.show{opacity:1}
 @media(min-width:700px){.statgrid{grid-template-columns:repeat(4,1fr)}}
+
+details.nativeGuide{margin-top:10px}
+details.nativeGuide summary{
+  list-style:none;cursor:pointer;display:inline-flex;align-items:center;
+  background:#f3edf7;border-radius:14px;padding:8px 10px;font-size:12px;font-weight:750
+}
+details.nativeGuide summary::-webkit-details-marker{display:none}
+details.nativeGuide[open] summary{margin-bottom:10px}
+.intensityChoices{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-top:8px}
+.intensityChoices input{position:absolute;opacity:0;pointer-events:none}
+.intensityChoices label{
+  display:grid;place-items:center;min-height:38px;border:1px solid var(--line);
+  background:white;border-radius:12px;font-weight:800;font-size:13px;cursor:pointer
+}
+.intensityChoices input:checked + label{background:var(--lav);border-color:#cbb6df}
+@media(max-width:520px){.intensityChoices{grid-template-columns:repeat(5,1fr)}}
+
+
+.guideToggleInput{position:absolute;opacity:0;pointer-events:none}
+.guideToggleLabel{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#f3edf7;border-radius:14px;padding:8px 10px;
+  font-size:12px;font-weight:750;cursor:pointer;margin-top:10px
+}
+.guideTogglePanel{display:none}
+.guideToggleInput:checked + .guideToggleLabel + .guideTogglePanel{display:block}
+
+
+.auth{max-width:480px;margin:45px auto}
+.choiceGroups{display:grid;gap:12px;margin-top:12px}
+.choiceGroup{padding:12px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.choiceGroupTitle{font-size:13px;font-weight:900;color:#685775;margin-bottom:8px}
+.selectChip{display:inline-flex;cursor:pointer}
+.selectChip input{position:absolute;opacity:0;pointer-events:none}
+.selectChip span{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:13px}
+.selectChip input:checked + span{background:var(--lav);border-color:#cbb6df;font-weight:800}
+.helpBtn{cursor:pointer}
+
 </style>
 </head>
-<body><main>
+<body>
+<main>
 <section id="authView" class="auth">
-<div class="card hero"><div style="font-size:50px">🐱</div><h1>마음 조각 2</h1><p class="muted">같은 계정으로 로그인하면 모바일과 PC 기록이 자동으로 동기화돼요.</p>
-<input id="email" type="email" placeholder="이메일"><br><br><input id="password" type="password" placeholder="비밀번호 (6자 이상)"><br><br>
-<div class="row"><button id="login" class="primary">로그인</button><button id="signup">처음 가입</button></div><p id="authMsg" class="tiny"></p></div>
+  <div class="card hero">
+    <div style="font-size:50px">🐱</div>
+    <h1>마음 조각 2</h1>
+    <p class="muted">같은 계정으로 로그인하면 모바일과 PC 기록이 자동으로 동기화돼요.</p>
+    <input id="email" type="email" placeholder="이메일"><br><br>
+    <input id="password" type="password" placeholder="비밀번호 (6자 이상)"><br><br>
+    <div class="row"><button id="login" class="primary">로그인</button><button id="signup">처음 가입</button></div>
+    <p id="authMsg" class="tiny"></p>
+  </div>
 </section>
 
 <section id="appView" class="hidden">
@@ -55,180 +115,379 @@ button{font:inherit;font-weight:750;border:0;border-radius:14px;padding:12px 14p
 <div class="guideChips"><span class="guideChip">객관적인 사실</span><span class="guideChip">한 순간</span><span class="guideChip">지금의 경험</span></div>
 <p class="example">예: 답장을 기다리고 있었는데 한동안 연락이 오지 않았다.</p>
 <div id="situationGuide" class="guideBox hidden">
-  <div class="guideRule">
-    <b>원칙 1 · 객관적인 사실로 적기</b>
-    해석이나 평가보다, CCTV에 찍힌 것처럼 실제 있었던 일을 적어보세요.
-    <div class="exampleGood">예: “친구가 나를 무시하고 지나감” → “친구가 내 인사에 답하지 않고 지나감”</div>
-  </div>
-  <div class="guideRule">
-    <b>원칙 2 · 선이 아니라 점으로 포착하기</b>
-    긴 기간 전체를 적기보다, 마음이 가장 크게 흔들린 특정 순간 하나를 골라보세요.
-    <div class="exampleGood">예: “이번 주 내내 일이 많았다” → “오늘 저녁 7시에 부장님이 내일까지 보고서를 쓰라고 했다”</div>
-  </div>
-  <div class="guideRule">
-    <b>원칙 3 · 현재에 초점 맞추기</b>
-    오래전 사건 자체보다, 그 과거가 지금 어떤 순간에 다시 떠올랐는지 적어보세요.
-    <div class="exampleGood">예: “5년 전 친구가 내 비밀을 퍼뜨렸다” → “오늘 출근길에 그 친구와 닮은 사람을 봤다”</div>
-  </div>
+  <div class="guideRule"><b>원칙 1 · 객관적인 사실로 적기</b>해석이나 평가보다, CCTV에 찍힌 것처럼 실제 있었던 일을 적어보세요.<div class="exampleGood">예: “친구가 나를 무시하고 지나감” → “친구가 내 인사에 답하지 않고 지나감”</div></div>
+  <div class="guideRule"><b>원칙 2 · 선이 아니라 점으로 포착하기</b>긴 기간 전체를 적기보다, 마음이 가장 크게 흔들린 특정 순간 하나를 골라보세요.<div class="exampleGood">예: “이번 주 내내 일이 많았다” → “오늘 저녁 7시에 부장님이 내일까지 보고서를 쓰라고 했다”</div></div>
+  <div class="guideRule"><b>원칙 3 · 현재에 초점 맞추기</b>오래전 사건 자체보다, 그 과거가 지금 어떤 순간에 다시 떠올랐는지 적어보세요.<div class="exampleGood">예: “5년 전 친구가 내 비밀을 퍼뜨렸다” → “오늘 출근길에 그 친구와 닮은 사람을 봤다”</div></div>
 </div>
 <textarea id="situation" placeholder="지금 마음을 흔든 한 장면을 객관적인 사실로 적어보세요."></textarea>
 </div>
+
 <div class="card">
 <div class="sectionTitle"><span class="num">2</span><h2>생각</h2><button type="button" id="thoughtHelpBtn" class="helpBtn">ⓘ 생각 작성 원칙</button></div>
-<div class="guideChips">
-  <span class="guideChip">핵심만 두세 문장</span>
-  <span class="guideChip">당시 생각 그대로</span>
-  <span class="guideChip">독백 형태</span>
-</div>
+<div class="guideChips"><span class="guideChip">핵심만 두세 문장</span><span class="guideChip">당시 생각 그대로</span><span class="guideChip">독백 형태</span></div>
 <p class="example">예: 보고서에 또 실수를 한 게 틀림없어. 이번에는 진짜 크게 혼나겠구나.</p>
-
 <div id="thoughtGuide" class="guideBox hidden">
-  <div class="guideRule">
-    <b>원칙 1 · 핵심만 두세 문장으로 포착하기</b>
-    생각을 길게 정리하거나 일기처럼 풀어쓰지 말고, 그 상황에서 가장 큰 영향을 준 생각만 두세 문장으로 짧게 적어보세요.
-    <div class="exampleGood">예: “팀장님이 나를 불렀다. 나는 내가 무엇을 잘못했는지 계속 고민했다…” → “보고서에 또 실수를 한 게 틀림없어. 이번에는 진짜 크게 혼나겠구나.”</div>
-  </div>
-
-  <div class="guideRule">
-    <b>원칙 2 · 당시의 날것 그대로 포착하기</b>
-    시간이 지난 뒤 새로 해석한 생각이 아니라, 사건이 일어난 바로 그 순간 자동으로 튀어나온 최초의 생각을 적어보세요.
-    <div class="exampleGood">예: 약속에 늦은 친구를 지금은 이해하더라도, 당시 처음 든 생각이 “나를 무시하는 건가? 어떻게 이렇게 매번 늦지?”였다면 그 생각을 그대로 적습니다.</div>
-  </div>
-
-  <div class="guideRule">
-    <b>원칙 3 · 설명이 아닌 독백 형태로 적기</b>
-    누군가에게 상황을 설명하는 문장보다, 그 순간 머릿속에서 스스로에게 툭 던졌던 말투를 살려보세요.
-    <div class="exampleGood">예: “그 사람이 나를 싫어한다고 생각했다.” → “나를 피하는 게 분명해. 내가 어제 실수해서 그런 걸까?”</div>
-  </div>
+  <div class="guideRule"><b>원칙 1 · 핵심만 두세 문장으로 포착하기</b>생각을 길게 정리하거나 일기처럼 풀어쓰지 말고, 그 상황에서 가장 큰 영향을 준 생각만 두세 문장으로 짧게 적어보세요.</div>
+  <div class="guideRule"><b>원칙 2 · 당시의 날것 그대로 포착하기</b>시간이 지난 뒤 새로 해석한 생각이 아니라, 사건이 일어난 바로 그 순간 자동으로 튀어나온 최초의 생각을 적어보세요.</div>
+  <div class="guideRule"><b>원칙 3 · 설명이 아닌 독백 형태로 적기</b>누군가에게 상황을 설명하는 문장보다, 그 순간 머릿속에서 스스로에게 툭 던졌던 말투를 살려보세요.</div>
 </div>
-
 <textarea id="thought" placeholder="그 순간 머릿속에 처음 튀어나온 생각을 짧은 독백처럼 적어보세요."></textarea>
 </div>
-<div class="card"><div class="sectionTitle"><span class="num">3</span><h2>감정</h2></div><p class="example">예: 불안 + 서운함 + 안도감처럼 여러 감정을 함께 골라도 괜찮아요.</p><div id="emotionChips" class="chips"></div><br><input id="emotionOther" placeholder="목록에 없는 감정 직접 입력"><p class="example" style="margin-top:14px">전체 감정 강도</p><div class="rangeRow"><input id="intensity" type="range" min="1" max="10" value="5"><span id="score" class="score">5</span></div></div>
-<div class="card"><div class="sectionTitle"><span class="num">4</span><h2>신체 반응</h2></div><p class="example">예: 심장이 두근거리고 목과 어깨가 긴장됐다.</p><div id="bodyChips" class="chips"></div><br><input id="bodyOther" placeholder="다른 신체 반응 직접 입력"></div>
-<div class="card"><div class="sectionTitle"><span class="num">5</span><h2>행동 / 충동</h2></div><p class="example">예: 계속 휴대폰을 확인하고 싶었고, 한 번 더 연락하고 싶었다.</p><textarea id="action"></textarea></div>
+
+
+
+<div class="card">
+  <div class="sectionTitle"><span class="num">3</span><h2>감정</h2><button type="button" id="emotionHelpBtn" class="helpBtn">ⓘ 감정 작성 원칙</button></div>
+  <div class="guideChips"><span class="guideChip">감정 이름 찾기</span><span class="guideChip">생각과 구분하기</span><span class="guideChip">여러 감정 함께</span></div>
+  <p class="example">그 순간 마음에서 느껴진 감정을 찾아보세요. 여러 감정을 동시에 선택해도 괜찮아요.</p>
+  <div id="emotionGuide" class="guideBox hidden">
+    <div class="guideRule"><b>원칙 1 · 생각이 아닌 감정을 적기</b>“나를 무시하는 것 같아”, “일이 잘못될 것 같아”처럼 상황에 대한 해석이나 판단은 생각에 가깝습니다. 그 생각 때문에 실제로 느껴진 감정이 무엇인지 찾아보세요.<div class="exampleGood">예: “나를 싫어하는 게 분명해” → “불안함, 서운함”</div></div>
+    <div class="guideRule"><b>원칙 2 · 정확한 단어가 바로 떠오르지 않아도 괜찮기</b>처음부터 꼭 맞는 감정 단어를 찾으려고 애쓰지 않아도 됩니다. 넓은 감정에서 시작해 더 가까운 표현을 골라도 괜찮아요.<div class="exampleGood">예: “기분이 이상하다” → “불안 → 걱정 → 초조함”</div></div>
+    <div class="guideRule"><b>원칙 3 · 여러 감정을 동시에 인정하기</b>한 상황에서도 여러 감정이 함께 생길 수 있습니다. 서로 반대되는 감정을 동시에 느껴도 괜찮습니다.<div class="exampleGood">예: 약속이 취소되어 슬픔과 실망이 들면서도, 한편으로는 편안함을 느낄 수 있어요.</div></div>
+  </div>
+  <div class="choiceGroups">
+<div class="choiceGroup"><div class="choiceGroupTitle">분노</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="emotion" value="화남"><span>화남</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="복수심"><span>복수심</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="악오름"><span>악오름</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="짜증"><span>짜증</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="적대감"><span>적대감</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">혐오감</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="emotion" value="역겨움"><span>역겨움</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="증오"><span>증오</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="경멸"><span>경멸</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="불쾌함"><span>불쾌함</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="반감"><span>반감</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="멸시"><span>멸시</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">부러움</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="emotion" value="시기"><span>시기</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="열망"><span>열망</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="씁쓸함"><span>씁쓸함</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="선망"><span>선망</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="샘남"><span>샘남</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="아쉬움"><span>아쉬움</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">두려움</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="emotion" value="공포"><span>공포</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="불안"><span>불안</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="걱정"><span>걱정</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="놀람"><span>놀람</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="공황"><span>공황</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="초조함"><span>초조함</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">질투</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="emotion" value="집착"><span>집착</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="경쟁심"><span>경쟁심</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="경계심"><span>경계심</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="소유욕"><span>소유욕</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="시샘"><span>시샘</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">슬픔</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="emotion" value="우울"><span>우울</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="절망"><span>절망</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="외로움"><span>외로움</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="서러움"><span>서러움</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="실망"><span>실망</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="패배감"><span>패배감</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">수치감</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="emotion" value="당혹감"><span>당혹감</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="굴욕"><span>굴욕</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="창피함"><span>창피함</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="민망함"><span>민망함</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="모멸감"><span>모멸감</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">죄책감</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="emotion" value="미안함"><span>미안함</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="후회"><span>후회</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="안쓰러움"><span>안쓰러움</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="회한"><span>회한</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="자책감"><span>자책감</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">행복</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="emotion" value="기쁨"><span>기쁨</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="만족"><span>만족</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="설렘"><span>설렘</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="편안함"><span>편안함</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="희망"><span>희망</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="자긍심"><span>자긍심</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">사랑</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="emotion" value="흠모"><span>흠모</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="애착"><span>애착</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="배려"><span>배려</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="우애"><span>우애</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="연민"><span>연민</span></label>
+<label class="selectChip"><input type="checkbox" name="emotion" value="친밀감"><span>친밀감</span></label>
+</div></div>
+</div>
+  <br><input id="emotionOther" placeholder="목록에 없는 감정 직접 입력">
+  <p class="example" style="margin-top:14px">전체 감정 강도</p>
+  <div class="rangeRow"><input id="intensity" type="range" min="1" max="10" value="5"><span id="score" class="score">5</span></div>
+</div>
+
+<div class="card">
+  <div class="sectionTitle"><span class="num">4</span><h2>신체 반응</h2><button type="button" id="bodyHelpBtn" class="helpBtn">ⓘ 신체 반응 작성 원칙</button></div>
+  <div class="guideChips"><span class="guideChip">몸의 변화 알아차리기</span><span class="guideChip">구체적인 감각</span><span class="guideChip">행동과 구분하기</span></div>
+  <p class="example">그 순간 몸에서 실제로 느껴진 변화를 골라보세요. 여러 반응을 함께 선택해도 괜찮아요.</p>
+  <div id="bodyGuide" class="guideBox hidden">
+    <div class="guideRule"><b>원칙 1 · 몸에서 실제로 느껴진 반응 적기</b>생각이나 감정보다 몸에서 직접 느껴진 변화를 적어보세요.<div class="exampleGood">예: “불안했다” → “심장이 빨리 뛰고 숨이 답답했다.”</div></div>
+    <div class="guideRule"><b>원칙 2 · 가능한 한 구체적으로 적기</b>“몸이 이상했다”처럼 넓게 쓰기보다 어느 부위에서 어떤 느낌이 있었는지 적어보세요.<div class="exampleGood">예: “긴장됐다” → “목과 어깨가 굳고 손에 땀이 났다.”</div></div>
+    <div class="guideRule"><b>원칙 3 · 행동이나 충동과 구분하기</b>“도망가고 싶었다”, “계속 확인하고 싶었다”는 행동/충동에 가깝습니다. 여기에는 몸에서 느껴진 감각을 적어주세요.<div class="exampleGood">예: “자리를 피하고 싶었다”는 행동/충동, “다리에 힘이 빠지고 가슴이 답답했다”는 신체 반응</div></div>
+  </div>
+  <div class="choiceGroups">
+<div class="choiceGroup"><div class="choiceGroupTitle">심장·호흡</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="body" value="심장이 두근거림"><span>심장이 두근거림</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="심장이 빨리 뜀"><span>심장이 빨리 뜀</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="가슴이 답답함"><span>가슴이 답답함</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="숨이 가쁨"><span>숨이 가쁨</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="숨쉬기 답답함"><span>숨쉬기 답답함</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">근육·몸의 긴장</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="body" value="목·어깨가 긴장됨"><span>목·어깨가 긴장됨</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="몸이 굳음"><span>몸이 굳음</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="이를 악묾"><span>이를 악묾</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="주먹에 힘이 들어감"><span>주먹에 힘이 들어감</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="몸이 떨림"><span>몸이 떨림</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="다리에 힘이 빠짐"><span>다리에 힘이 빠짐</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">위장·배</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="body" value="속이 울렁거림"><span>속이 울렁거림</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="속이 불편함"><span>속이 불편함</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="배가 아픔"><span>배가 아픔</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="메스꺼움"><span>메스꺼움</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">머리·감각</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="body" value="머리가 아픔"><span>머리가 아픔</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="어지러움"><span>어지러움</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="멍한 느낌"><span>멍한 느낌</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="눈물이 남"><span>눈물이 남</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">체온·피부</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="body" value="얼굴이 뜨거움"><span>얼굴이 뜨거움</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="몸에 열이 남"><span>몸에 열이 남</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="식은땀이 남"><span>식은땀이 남</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="손에 땀이 남"><span>손에 땀이 남</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="손발이 차가움"><span>손발이 차가움</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">전신 반응</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="body" value="몸이 무거움"><span>몸이 무거움</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="기운이 빠짐"><span>기운이 빠짐</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="피곤함"><span>피곤함</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="몸이 축 처짐"><span>몸이 축 처짐</span></label>
+<label class="selectChip"><input type="checkbox" name="body" value="몸이 안절부절못함"><span>몸이 안절부절못함</span></label>
+</div></div>
+</div>
+  <br><input id="bodyOther" placeholder="다른 신체 반응 직접 입력">
+</div>
+
+<div class="card">
+  <div class="sectionTitle"><span class="num">5</span><h2>행동 / 충동</h2><button type="button" id="actionHelpBtn" class="helpBtn">ⓘ 행동 / 충동 작성 원칙</button></div>
+  <div class="guideChips"><span class="guideChip">실제로 한 행동</span><span class="guideChip">하고 싶었던 충동</span><span class="guideChip">즉각적인 반응</span></div>
+  <p class="example">그 순간 실제로 무엇을 했는지, 혹은 행동으로 옮기지는 않았지만 무엇을 하고 싶었는지 살펴보세요.</p>
+  <div id="actionGuide" class="guideBox hidden">
+    <div class="guideRule"><b>원칙 1 · 실제로 한 행동을 적기</b>그 상황에서 내가 실제로 무엇을 했는지 구체적으로 적어보세요.<div class="exampleGood">예: “전화를 끊었다.” / “침대에 누웠다.” / “자리를 피했다.”</div></div>
+    <div class="guideRule"><b>원칙 2 · 행동하지 않은 충동도 적기</b>실제로 하지는 않았더라도 순간적으로 강하게 하고 싶었던 행동이 있다면 그것도 중요한 기록입니다.<div class="exampleGood">예: “소리를 지르고 싶었다.” / “당장 도망치고 싶었다.” / “한 번 더 연락하고 싶었다.”</div></div>
+    <div class="guideRule"><b>원칙 3 · 나중의 대처보다 즉각적인 반응을 먼저 보기</b>산책이나 심호흡처럼 이후에 의식적으로 선택한 대처는 아래 ‘나에게 도움 된 것’에 더 가깝습니다. 여기에는 그 순간 자동으로 튀어나온 행동이나 충동을 적어보세요.<div class="exampleGood">예: “휴대폰을 계속 확인했다.” / “아무 말도 하지 않고 굳어 있었다.”</div></div>
+  </div>
+  <div class="choiceGroups">
+<div class="choiceGroup"><div class="choiceGroupTitle">회피·도피</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="actionTag" value="자리를 피하고 싶음"><span>자리를 피하고 싶음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="도망치고 싶음"><span>도망치고 싶음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="연락을 끊고 싶음"><span>연락을 끊고 싶음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="숨고 싶음"><span>숨고 싶음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="아무것도 하기 싫음"><span>아무것도 하기 싫음</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">확인·매달림</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="actionTag" value="계속 확인하고 싶음"><span>계속 확인하고 싶음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="한 번 더 연락하고 싶음"><span>한 번 더 연락하고 싶음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="답을 재촉하고 싶음"><span>답을 재촉하고 싶음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="상대의 반응을 확인하고 싶음"><span>상대의 반응을 확인하고 싶음</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">공격·대립</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="actionTag" value="따지고 싶음"><span>따지고 싶음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="소리 지르고 싶음"><span>소리 지르고 싶음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="화내고 싶음"><span>화내고 싶음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="상처 주는 말을 하고 싶음"><span>상처 주는 말을 하고 싶음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="물건을 던지고 싶음"><span>물건을 던지고 싶음</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">멈춤·위축</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="actionTag" value="아무 말도 못함"><span>아무 말도 못함</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="몸이 굳음"><span>몸이 굳음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="움직이지 못함"><span>움직이지 못함</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="사람을 피함"><span>사람을 피함</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="시선을 피함"><span>시선을 피함</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">감정 표현</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="actionTag" value="울고 싶음"><span>울고 싶음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="실제로 울음"><span>실제로 울음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="하소연하고 싶음"><span>하소연하고 싶음</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="누군가에게 말하고 싶음"><span>누군가에게 말하고 싶음</span></label>
+</div></div>
+<div class="choiceGroup"><div class="choiceGroupTitle">반복 행동</div><div class="chips">
+<label class="selectChip"><input type="checkbox" name="actionTag" value="휴대폰을 계속 확인함"><span>휴대폰을 계속 확인함</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="같은 생각을 반복함"><span>같은 생각을 반복함</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="계속 검색함"><span>계속 검색함</span></label>
+<label class="selectChip"><input type="checkbox" name="actionTag" value="상대의 말이나 행동을 다시 확인함"><span>상대의 말이나 행동을 다시 확인함</span></label>
+</div></div>
+</div>
+  <br><textarea id="action" placeholder="선택지에 없거나 더 자세히 남기고 싶은 행동·충동을 적어보세요."></textarea>
+</div>
 <div class="card"><h2>🌿 나에게 도움 된 것</h2><p class="example">예: 산책하기, 음악 듣기, 잠깐 누워 있기, 누군가에게 말하기</p><textarea id="helpful"></textarea></div>
 <div class="card"><h2>✏️ 한줄 돌아보기</h2><p class="example">예: 지금 다시 보면 이 상황을 어떻게 바라보고 싶은가?</p><textarea id="reflection"></textarea></div>
-<button id="save" class="primary" style="width:100%;font-size:17px">마음 조각 저장하기</button><button id="clear" class="secondary" style="width:100%;margin-top:8px">작성 내용 비우기</button>
+<button id="save" class="primary" style="width:100%;font-size:17px">마음 조각 저장하기</button>
+<button id="clear" class="secondary" style="width:100%;margin-top:8px">작성 내용 비우기</button>
 </section>
 
-<section id="tabRecords" class="hidden"><div class="card"><h1>기록 보기</h1><div class="toolbar"><input id="search" placeholder="상황·생각 검색"><select id="filter"><option value="">모든 감정</option></select></div><label class="tiny"><input id="favOnly" type="checkbox" style="width:auto"> 즐겨찾기만 보기</label></div><div id="recordList"></div></section>
+<section id="tabRecords" class="hidden">
+<div class="card"><h1>기록 보기</h1><div class="toolbar"><input id="search" placeholder="상황·생각 검색"><select id="filter"><option value="">모든 감정</option><option>화남</option><option>복수심</option><option>악오름</option><option>짜증</option><option>적대감</option><option>역겨움</option><option>증오</option><option>경멸</option><option>불쾌함</option><option>반감</option><option>멸시</option><option>시기</option><option>열망</option><option>씁쓸함</option><option>선망</option><option>샘남</option><option>아쉬움</option><option>공포</option><option>불안</option><option>걱정</option><option>놀람</option><option>공황</option><option>초조함</option><option>집착</option><option>경쟁심</option><option>경계심</option><option>소유욕</option><option>시샘</option><option>우울</option><option>절망</option><option>외로움</option><option>서러움</option><option>실망</option><option>패배감</option><option>당혹감</option><option>굴욕</option><option>창피함</option><option>민망함</option><option>모멸감</option><option>미안함</option><option>후회</option><option>안쓰러움</option><option>회한</option><option>자책감</option><option>기쁨</option><option>만족</option><option>설렘</option><option>편안함</option><option>희망</option><option>자긍심</option><option>흠모</option><option>애착</option><option>배려</option><option>우애</option><option>연민</option><option>친밀감</option></select></div></div>
+<div id="recordList"></div>
+</section>
+
 <section id="tabStats" class="hidden"><div class="card"><h1>분석</h1><div class="row"><button id="days7" class="small">최근 7일</button><button id="days30" class="small primary">최근 30일</button></div></div><div id="stats"></div></section>
-<section id="tabSettings" class="hidden"><div class="card"><h1>설정</h1><p class="muted">같은 이메일 계정으로 로그인하면 모바일과 PC에서 같은 기록을 볼 수 있어요.</p><button id="exportJson" style="width:100%">JSON 백업</button><br><br><button id="exportCsv" style="width:100%">CSV 내보내기</button><br><br><label class="tiny">JSON 백업 복원</label><input id="importFile" type="file" accept=".json,application/json"></div></section>
+
+<section id="tabSettings" class="hidden">
+<div class="card"><h1>설정</h1><p class="muted">같은 이메일 계정으로 로그인하면 모바일과 PC에서 같은 기록을 볼 수 있어요.</p><button id="exportJson" style="width:100%">JSON 백업</button><br><br><button id="exportCsv" style="width:100%">CSV 내보내기</button><br><br><label class="tiny">JSON 백업 복원</label><input id="importFile" type="file" accept=".json,application/json"></div>
+</section>
 </section>
 </main>
-<nav id="nav" class="bottomnav hidden"><button data-tab="Write" class="active">✍️<br>기록</button><button data-tab="Records">📚<br>기록보기</button><button data-tab="Stats">📊<br>분석</button><button data-tab="Settings">⚙️<br>설정</button></nav><div id="toast"></div>
+
+<nav id="nav" class="bottomnav hidden">
+<button data-tab="Write" class="active">✍️<br>기록</button>
+<button data-tab="Records">📚<br>기록보기</button>
+<button data-tab="Stats">📊<br>분석</button>
+<button data-tab="Settings">⚙️<br>설정</button>
+</nav>
+<div id="toast"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { getFirestore,collection,addDoc,doc,updateDoc,deleteDoc,getDocs,query,orderBy,serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-const firebaseConfig={"apiKey": "AIzaSyCOy8x5kPeJUUqRUjEHRqckT2ReULEoUac", "authDomain": "maeum-jogak2.firebaseapp.com", "projectId": "maeum-jogak2", "storageBucket": "maeum-jogak2.firebasestorage.app", "messagingSenderId": "942972843404", "appId": "1:942972843404:web:8148d7610469425609d2a9", "measurementId": "G-HCZ819E5VC"};
+const firebaseConfig={"apiKey":"AIzaSyCOy8x5kPeJUUqRUjEHRqckT2ReULEoUac","authDomain":"maeum-jogak2.firebaseapp.com","projectId":"maeum-jogak2","storageBucket":"maeum-jogak2.firebasestorage.app","messagingSenderId":"942972843404","appId":"1:942972843404:web:8148d7610469425609d2a9","measurementId":"G-HCZ819E5VC"};
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
-const EMO=["불안","슬픔","화남","서운함","죄책감","수치심","답답함","외로움","두려움","짜증","실망","기쁨","안도감","편안함","감사","기대감","뿌듯함","즐거움","설렘","만족감","사랑스러움"];
-const BODY=["심장이 두근거림","숨이 답답함","목·어깨가 긴장됨","속이 불편함","머리가 아픔","손에 땀이 남","몸이 무거움","눈물이 남","얼굴이 뜨거움","손발이 차가움"];
-const $=x=>document.getElementById(x),DRAFT="mj2draft";let user=null,records=[],selE=[],selB=[],editing=null,days=30;
+const EMO=["화남", "복수심", "악오름", "짜증", "적대감", "역겨움", "증오", "경멸", "불쾌함", "반감", "멸시", "시기", "열망", "씁쓸함", "선망", "샘남", "아쉬움", "공포", "불안", "걱정", "놀람", "공황", "초조함", "집착", "경쟁심", "경계심", "소유욕", "시샘", "우울", "절망", "외로움", "서러움", "실망", "패배감", "당혹감", "굴욕", "창피함", "민망함", "모멸감", "미안함", "후회", "안쓰러움", "회한", "자책감", "기쁨", "만족", "설렘", "편안함", "희망", "자긍심", "흠모", "애착", "배려", "우애", "연민", "친밀감"];
+const $=x=>document.getElementById(x),DRAFT="mj2draft-v2";
+let user=null,records=[],editing=null,days=30;
+
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function toast(t){let e=$("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1500)}
-$("emotionChips").innerHTML=EMO.map(x=>`<button type="button" class="chip" data-e="${x}">${x}</button>`).join("");
-$("bodyChips").innerHTML=BODY.map(x=>`<button type="button" class="chip" data-b="${x}">${x}</button>`).join("");
-$("filter").innerHTML='<option value="">모든 감정</option>'+EMO.map(x=>`<option>${x}</option>`).join("");
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1500)}
+function checked(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value)}
+function setChecked(name,values=[]){document.querySelectorAll(`input[name="${name}"]`).forEach(x=>x.checked=values.includes(x.value))}
 function showApp(ok){$("authView").classList.toggle("hidden",ok);$("appView").classList.toggle("hidden",!ok);$("nav").classList.toggle("hidden",!ok)}
-onAuthStateChanged(auth,async u=>{user=u;showApp(!!u);if(u){$("sync").textContent="☁️ "+u.email;loadDraft();await loadRecords()}});
+
+function bindGuide(btnId,boxId,label){
+  const btn=$(btnId),box=$(boxId); if(!btn||!box)return;
+  btn.onclick=()=>{
+    const opening=box.classList.contains("hidden");
+    box.classList.toggle("hidden");
+    btn.textContent=opening?"▲ 원칙 닫기":`ⓘ ${label}`;
+  };
+}
+bindGuide("situationHelpBtn","situationGuide","상황 작성 원칙");
+bindGuide("thoughtHelpBtn","thoughtGuide","생각 작성 원칙");
+bindGuide("emotionHelpBtn","emotionGuide","감정 작성 원칙");
+bindGuide("bodyHelpBtn","bodyGuide","신체 반응 작성 원칙");
+bindGuide("actionHelpBtn","actionGuide","행동 / 충동 작성 원칙");
+
+onAuthStateChanged(auth,async u=>{
+  user=u;showApp(!!u);
+  if(u){$("sync").textContent="☁️ "+u.email;loadDraft();await loadRecords()}
+});
 $("login").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value)}catch(e){$("authMsg").textContent="로그인 실패: "+e.message}};
 $("signup").onclick=async()=>{try{await createUserWithEmailAndPassword(auth,$("email").value.trim(),$("password").value)}catch(e){$("authMsg").textContent="가입 실패: "+e.message}};
 $("logout").onclick=()=>signOut(auth);
-$("situationHelpBtn").onclick=()=>{
-  const g=$("situationGuide");
-  const open=g.classList.toggle("hidden");
-  $("situationHelpBtn").textContent=open?"ⓘ 상황 작성 원칙":"▲ 원칙 닫기";
-};
-$("thoughtHelpBtn").onclick=()=>{
-  const g=$("thoughtGuide");
-  const open=g.classList.toggle("hidden");
-  $("thoughtHelpBtn").textContent=open?"ⓘ 생각 작성 원칙":"▲ 원칙 닫기";
-};
 
-function current(){return {situation:$("situation").value.trim(),thought:$("thought").value.trim(),emotions:[...selE],emotionOther:$("emotionOther").value.trim(),intensity:+$("intensity").value,body:[...selB],bodyOther:$("bodyOther").value.trim(),action:$("action").value.trim(),helpful:$("helpful").value.trim(),reflection:$("reflection").value.trim()}}
+function current(){return {
+  situation:$("situation").value.trim(),thought:$("thought").value.trim(),
+  emotions:checked("emotion"),emotionOther:$("emotionOther").value.trim(),
+  intensity:+$("intensity").value,body:checked("body"),bodyOther:$("bodyOther").value.trim(),
+  actionTags:checked("actionTag"),action:$("action").value.trim(),
+  helpful:$("helpful").value.trim(),reflection:$("reflection").value.trim()
+}}
 function saveDraft(){localStorage.setItem(DRAFT,JSON.stringify(current()))}
-function fill(d={}){$("situation").value=d.situation||"";$("thought").value=d.thought||"";selE=[...(d.emotions||[])];$("emotionOther").value=d.emotionOther||"";$("intensity").value=d.intensity||5;$("score").textContent=d.intensity||5;selB=[...(d.body||[])];$("bodyOther").value=d.bodyOther||"";$("action").value=d.action||"";$("helpful").value=d.helpful||"";$("reflection").value=d.reflection||"";document.querySelectorAll("[data-e]").forEach(b=>b.classList.toggle("on",selE.includes(b.dataset.e)));document.querySelectorAll("[data-b]").forEach(b=>b.classList.toggle("on",selB.includes(b.dataset.b)))}
-function loadDraft(){try{let d=JSON.parse(localStorage.getItem(DRAFT)||"null");if(d)fill(d)}catch{}}
+function fill(d={}){
+  $("situation").value=d.situation||"";$("thought").value=d.thought||"";
+  setChecked("emotion",d.emotions||[]);$("emotionOther").value=d.emotionOther||"";
+  $("intensity").value=d.intensity||5;$("score").textContent=d.intensity||5;
+  setChecked("body",d.body||[]);$("bodyOther").value=d.bodyOther||"";
+  setChecked("actionTag",d.actionTags||[]);$("action").value=d.action||"";
+  $("helpful").value=d.helpful||"";$("reflection").value=d.reflection||"";
+}
+function loadDraft(){try{const d=JSON.parse(localStorage.getItem(DRAFT)||"null");if(d)fill(d)}catch{}}
 function clearForm(){fill({});editing=null;localStorage.removeItem(DRAFT)}
 ["situation","thought","emotionOther","bodyOther","action","helpful","reflection"].forEach(id=>$(id).addEventListener("input",saveDraft));
+document.querySelectorAll('input[type="checkbox"]').forEach(x=>x.addEventListener("change",saveDraft));
 $("intensity").oninput=()=>{$("score").textContent=$("intensity").value;saveDraft()};
-$("emotionChips").onclick=e=>{let b=e.target.closest("[data-e]");if(!b)return;let i=selE.indexOf(b.dataset.e);i>=0?selE.splice(i,1):selE.push(b.dataset.e);b.classList.toggle("on");saveDraft()};
-$("bodyChips").onclick=e=>{let b=e.target.closest("[data-b]");if(!b)return;let i=selB.indexOf(b.dataset.b);i>=0?selB.splice(i,1):selB.push(b.dataset.b);b.classList.toggle("on");saveDraft()};
 $("clear").onclick=()=>{if(confirm("작성 내용을 비울까요?"))clearForm()};
-$("save").onclick=async()=>{let d=current();if(!d.situation&&!d.thought&&!d.emotions.length&&!d.action)return alert("기록할 내용을 조금이라도 입력해주세요.");try{if(editing){let old=records.find(r=>r.id===editing);await updateDoc(doc(db,"users",user.uid,"records",editing),{...d,favorite:old?.favorite||false,updatedAt:serverTimestamp()})}else{await addDoc(collection(db,"users",user.uid,"records"),{...d,favorite:false,createdAt:serverTimestamp(),updatedAt:serverTimestamp()})}clearForm();toast("저장했어요 🌷");await loadRecords()}catch(e){alert("저장 실패: "+e.message)}};
 
-async function loadRecords(){try{let s=await getDocs(query(collection(db,"users",user.uid,"records"),orderBy("createdAt","desc")));records=s.docs.map(x=>({id:x.id,...x.data()}));renderRecords();renderStats()}catch(e){$("sync").textContent="⚠️ 동기화 오류";console.error(e)}}
-function when(r){return r.createdAt?.toDate?r.createdAt.toDate():new Date()}
-function renderRecords(){
-  let q=$("search").value.toLowerCase(),f=$("filter").value,fav=$("favOnly").checked;
-  let a=records.filter(r=>
-    (!q||((r.situation||"")+" "+(r.thought||"")+" "+(r.action||"")+" "+(r.helpful||"")+" "+(r.reflection||"")).toLowerCase().includes(q)) &&
-    (!f||(r.emotions||[]).includes(f)||r.emotionOther===f) &&
-    (!fav||r.favorite)
-  );
-
-  function section(label,value){
-    if(value===undefined||value===null||String(value).trim()==="") return "";
-    return `<div class="recordSection"><div class="recordLabel">${label}</div><div class="recordText">${esc(value)}</div></div>`;
-  }
-  function chipSection(label,values){
-    let v=(values||[]).filter(Boolean);
-    if(!v.length) return "";
-    return `<div class="recordSection"><div class="recordLabel">${label}</div><div class="badges">${v.map(x=>`<span class="badge">${esc(x)}</span>`).join("")}</div></div>`;
-  }
-
-  $("recordList").innerHTML=a.length ? a.map(r=>{
-    let emotions=[...(r.emotions||[]),r.emotionOther].filter(Boolean);
-    let bodies=[...(r.body||[]),r.bodyOther].filter(Boolean);
-    let intensity=(emotions.length && r.intensity) ? `<span class="badge">강도 ${esc(r.intensity)}</span>` : "";
-    return `<div class="record">
-      <div class="recordTitle">${r.favorite?"⭐ ":""}${when(r).toLocaleString("ko-KR")}</div>
-      ${section("상황",r.situation)}
-      ${section("생각",r.thought)}
-      ${emotions.length?`<div class="recordSection"><div class="recordLabel">감정</div><div class="badges">${emotions.map(x=>`<span class="badge">${esc(x)}</span>`).join("")}${intensity}</div></div>`:""}
-      ${chipSection("신체 반응",bodies)}
-      ${section("행동 / 충동",r.action)}
-      ${section("나에게 도움 된 것",r.helpful)}
-      ${section("한줄 돌아보기",r.reflection)}
-      <div class="actions">
-        <button class="small" data-open="${r.id}">열기/수정</button>
-        <button class="small" data-fav="${r.id}">${r.favorite?"★ 해제":"☆ 즐겨찾기"}</button>
-        <button class="small danger" data-del="${r.id}">삭제</button>
-      </div>
-    </div>`;
-  }).join("") : '<div class="card muted">조건에 맞는 기록이 없어요.</div>';
-
-  document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{
-    let r=records.find(x=>x.id===b.dataset.open);
-    editing=r.id;fill(r);
-    document.querySelector('[data-tab="Write"]').click();
-    scrollTo(0,0);
-  });
-  document.querySelectorAll("[data-fav]").forEach(b=>b.onclick=async()=>{
-    let r=records.find(x=>x.id===b.dataset.fav);
-    await updateDoc(doc(db,"users",user.uid,"records",r.id),{favorite:!r.favorite,updatedAt:serverTimestamp()});
-    await loadRecords();
-  });
-  document.querySelectorAll("[data-del]").forEach(b=>b.onclick=async()=>{
-    if(confirm("삭제할까요?")){
-      await deleteDoc(doc(db,"users",user.uid,"records",b.dataset.del));
-      await loadRecords();
+$("save").onclick=async()=>{
+  const d=current();
+  if(!d.situation&&!d.thought&&!d.emotions.length&&!d.emotionOther&&!d.body.length&&!d.bodyOther&&!d.actionTags.length&&!d.action)
+    return alert("기록할 내용을 조금이라도 입력해주세요.");
+  try{
+    if(editing){
+      const old=records.find(r=>r.id===editing);
+      await updateDoc(doc(db,"users",user.uid,"records",editing),{...d,favorite:old?.favorite||false,updatedAt:serverTimestamp()});
+    }else{
+      await addDoc(collection(db,"users",user.uid,"records"),{...d,favorite:false,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
     }
-  });
-}
-["search","filter","favOnly"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",renderRecords));
+    clearForm();toast("저장했어요 🌷");await loadRecords();
+  }catch(e){alert("저장 실패: "+e.message)}
+};
 
-function renderStats(){let cut=new Date(Date.now()-days*86400000),rs=records.filter(r=>when(r)>=cut),c={};rs.flatMap(r=>[...(r.emotions||[]),r.emotionOther].filter(Boolean)).forEach(x=>c[x]=(c[x]||0)+1);let top=Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,7),avg=rs.length?(rs.reduce((s,r)=>s+(+r.intensity||0),0)/rs.length).toFixed(1):"-";$("stats").innerHTML=`<div class="statgrid"><div class="stat"><span class="tiny">기록 수</span><b>${rs.length}</b></div><div class="stat"><span class="tiny">평균 강도</span><b>${avg}</b></div><div class="stat"><span class="tiny">가장 잦은 감정</span><b style="font-size:18px">${esc(top[0]?.[0]||"-")}</b></div><div class="stat"><span class="tiny">도움 기록</span><b>${rs.filter(r=>r.helpful).length}</b></div></div><div class="card"><h2>자주 나온 감정</h2>${top.length?top.map(([k,v])=>`<div class="tiny">${esc(k)} · ${v}회</div><div class="barline"><i style="width:${v/(top[0][1]||1)*100}%"></i></div>`).join(""):'<p class="muted">아직 기록이 없어요.</p>'}</div>`}
+async function loadRecords(){
+  try{
+    const s=await getDocs(query(collection(db,"users",user.uid,"records"),orderBy("createdAt","desc")));
+    records=s.docs.map(x=>({id:x.id,...x.data()}));renderRecords();renderStats();
+  }catch(e){$("sync").textContent="⚠️ 동기화 오류";console.error(e)}
+}
+function when(r){return r.createdAt?.toDate?r.createdAt.toDate():new Date(r.createdAt||Date.now())}
+function section(label,value){if(value===undefined||value===null||String(value).trim()==="")return "";return `<div class="recordSection"><div class="recordLabel">${label}</div><div class="recordText">${esc(value)}</div></div>`}
+function chipSection(label,values){const v=(values||[]).filter(Boolean);if(!v.length)return "";return `<div class="recordSection"><div class="recordLabel">${label}</div><div class="badges">${v.map(x=>`<span class="badge">${esc(x)}</span>`).join("")}</div></div>`}
+function renderRecords(){
+  const q=$("search").value.toLowerCase(),f=$("filter").value,fav=$("favOnly")?.checked||false;
+  const a=records.filter(r=>
+    (!q||((r.situation||"")+" "+(r.thought||"")+" "+(r.action||"")+" "+((r.actionTags||[]).join(" "))+" "+(r.helpful||"")+" "+(r.reflection||"")).toLowerCase().includes(q)) &&
+    (!f||(r.emotions||[]).includes(f)||r.emotionOther===f) && (!fav||r.favorite)
+  );
+  $("recordList").innerHTML=a.length?a.map(r=>{
+    const emotions=[...(r.emotions||[]),r.emotionOther].filter(Boolean);
+    const bodies=[...(r.body||[]),r.bodyOther].filter(Boolean);
+    const actions=[...(r.actionTags||[])].filter(Boolean);
+    const intensity=(emotions.length&&r.intensity)?`<span class="badge">강도 ${esc(r.intensity)}</span>`:"";
+    return `<div class="record"><div class="recordTitle">${r.favorite?"⭐ ":""}${when(r).toLocaleString("ko-KR")}</div>
+      ${section("상황",r.situation)}${section("생각",r.thought)}
+      ${emotions.length?`<div class="recordSection"><div class="recordLabel">감정</div><div class="badges">${emotions.map(x=>`<span class="badge">${esc(x)}</span>`).join("")}${intensity}</div></div>`:""}
+      ${chipSection("신체 반응",bodies)}${chipSection("행동 / 충동 선택",actions)}${section("행동 / 충동 메모",r.action)}
+      ${section("나에게 도움 된 것",r.helpful)}${section("한줄 돌아보기",r.reflection)}
+      <div class="actions"><button class="small" data-open="${r.id}">열기/수정</button><button class="small" data-fav="${r.id}">${r.favorite?"★ 해제":"☆ 즐겨찾기"}</button><button class="small danger" data-del="${r.id}">삭제</button></div></div>`;
+  }).join(""):'<div class="card muted">조건에 맞는 기록이 없어요.</div>';
+  document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const r=records.find(x=>x.id===b.dataset.open);if(!r)return;editing=r.id;fill(r);document.querySelector('[data-tab="Write"]').click();scrollTo(0,0)});
+  document.querySelectorAll("[data-fav]").forEach(b=>b.onclick=async()=>{const r=records.find(x=>x.id===b.dataset.fav);if(!r)return;await updateDoc(doc(db,"users",user.uid,"records",r.id),{favorite:!r.favorite,updatedAt:serverTimestamp()});await loadRecords()});
+  document.querySelectorAll("[data-del]").forEach(b=>b.onclick=async()=>{if(confirm("삭제할까요?")){await deleteDoc(doc(db,"users",user.uid,"records",b.dataset.del));await loadRecords()}});
+}
+["search","filter","favOnly"].forEach(id=>{const el=$(id);if(el)el.addEventListener(id==="search"?"input":"change",renderRecords)});
+
+function renderStats(){
+  const cut=new Date(Date.now()-days*86400000),rs=records.filter(r=>when(r)>=cut),c={};
+  rs.flatMap(r=>[...(r.emotions||[]),r.emotionOther].filter(Boolean)).forEach(x=>c[x]=(c[x]||0)+1);
+  const top=Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,7);
+  const avg=rs.length?(rs.reduce((s,r)=>s+(+r.intensity||0),0)/rs.length).toFixed(1):"-";
+  $("stats").innerHTML=`<div class="statgrid"><div class="stat"><span class="tiny">기록 수</span><b>${rs.length}</b></div><div class="stat"><span class="tiny">평균 강도</span><b>${avg}</b></div><div class="stat"><span class="tiny">가장 잦은 감정</span><b style="font-size:18px">${esc(top[0]?.[0]||"-")}</b></div><div class="stat"><span class="tiny">도움 기록</span><b>${rs.filter(r=>r.helpful).length}</b></div></div><div class="card"><h2>자주 나온 감정</h2>${top.length?top.map(([k,v])=>`<div class="tiny">${esc(k)} · ${v}회</div><div class="barline"><i style="width:${v/(top[0][1]||1)*100}%"></i></div>`).join(""):'<p class="muted">아직 기록이 없어요.</p>'}</div>`;
+}
 $("days7").onclick=()=>{days=7;renderStats()};$("days30").onclick=()=>{days=30;renderStats()};
 document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.remove("active"));b.classList.add("active");["Write","Records","Stats","Settings"].forEach(t=>$("tab"+t).classList.add("hidden"));$("tab"+b.dataset.tab).classList.remove("hidden");if(b.dataset.tab==="Stats")renderStats()});
 
-$("exportJson").onclick=()=>{let blob=new Blob([JSON.stringify(records.map(({id,...r})=>r),null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="마음조각2-백업.json";a.click()};
-$("exportCsv").onclick=()=>{let quote=s=>'"'+String(s??"").replaceAll('"','""')+'"',head=["날짜","상황","생각","감정","강도","신체반응","행동/충동","도움된것","돌아보기"],rows=records.map(r=>[when(r).toLocaleString("ko-KR"),r.situation,r.thought,[...(r.emotions||[]),r.emotionOther].filter(Boolean).join("|"),r.intensity,[...(r.body||[]),r.bodyOther].filter(Boolean).join("|"),r.action,r.helpful,r.reflection].map(quote).join(","));let blob=new Blob(["\ufeff"+head.join(",")+"\n"+rows.join("\n")],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="마음조각2.csv";a.click()};
-$("importFile").onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let arr=JSON.parse(await f.text());if(!Array.isArray(arr))throw Error("잘못된 형식");for(let r of arr){await addDoc(collection(db,"users",user.uid,"records"),{...r,createdAt:serverTimestamp(),updatedAt:serverTimestamp()})}await loadRecords();toast("복원 완료")}catch(err){alert("복원 실패: "+err.message)}};
-if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
-</script></body></html>
+$("exportJson").onclick=()=>{const blob=new Blob([JSON.stringify(records.map(({id,...r})=>r),null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="마음조각2-백업.json";a.click()};
+$("exportCsv").onclick=()=>{const quote=s=>'"'+String(s??"").replaceAll('"','""')+'"',head=["날짜","상황","생각","감정","강도","신체반응","행동/충동선택","행동/충동메모","도움된것","돌아보기"],rows=records.map(r=>[when(r).toLocaleString("ko-KR"),r.situation,r.thought,[...(r.emotions||[]),r.emotionOther].filter(Boolean).join("|"),r.intensity,[...(r.body||[]),r.bodyOther].filter(Boolean).join("|"),(r.actionTags||[]).join("|"),r.action,r.helpful,r.reflection].map(quote).join(","));const blob=new Blob(["\ufeff"+head.join(",")+"\n"+rows.join("\n")],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="마음조각2.csv";a.click()};
+$("importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const arr=JSON.parse(await f.text());if(!Array.isArray(arr))throw Error("잘못된 형식");for(const r of arr)await addDoc(collection(db,"users",user.uid,"records"),{...r,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});await loadRecords();toast("복원 완료")}catch(err){alert("복원 실패: "+err.message)}};
+
+if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(console.error));
+</script>
+
+</body>
+</html>
